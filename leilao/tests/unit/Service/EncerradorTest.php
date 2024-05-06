@@ -1,6 +1,6 @@
 <?php
 
-namespace Alura\Leilao\Tests\Service;
+namespace Alura\Leilao\Tests\Unit\Service;
 
 use Alura\Leilao\Dao\Leilao as LeilaoDao;
 use Alura\Leilao\Model\Leilao;
