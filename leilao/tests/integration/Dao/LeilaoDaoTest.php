@@ -19,30 +19,32 @@ class LeilaoDaoTest extends TestCase
     self::$pdo->exec('CREATE TABLE leiloes (id INTEGER PRIMARY KEY, descricao TEXT, finalizado BOOL, dataInicio TEXT);');
   }
 
-  public function setUp(): void {
+  public function setUp(): void
+  {
     self::$pdo->beginTransaction();
   }
 
-  public function testBuscaLeiloesNaoFinalizados()
+  /**
+   * @dataProvider leiloes
+   */
+  public function testBuscaLeiloesNaoFinalizados(array $leiloes)
   {
     // arrange
-    $leilao = new Leilao('Variant 0Km');
     $leilaoDao = new LeilaoDao(self::$pdo);
-    $leilaoDao->salva($leilao);
 
-    $leilao = new Leilao('Fiat 147 0Km');
-    $leilao->finaliza();
-    $leilaoDao->salva($leilao);
+    foreach ($leiloes as $leilao) {
+      $leilaoDao->salva($leilao);
+    }
 
     // act
     $leiloes = $leilaoDao->recuperarNaoFinalizados();
-    
+
     // assert
     self::assertCount(1, $leiloes);
     self::assertContainsOnlyInstancesOf(Leilao::class, $leiloes);
     self::assertSame('Variant 0Km', $leiloes[0]->recuperarDescricao());
   }
-  
+
   /**
    * @dataProvider leiloes
    */
@@ -57,20 +59,37 @@ class LeilaoDaoTest extends TestCase
 
     // act
     $leiloes = $leilaoDao->recuperarFinalizados();
-    
+
     // assert
     self::assertCount(1, $leiloes);
     self::assertContainsOnlyInstancesOf(Leilao::class, $leiloes);
     self::assertSame('Fiat 147 0Km', $leiloes[0]->recuperarDescricao());
+    self::assertTrue($leiloes[0]->estaFinalizado());
   }
 
-  public function tearDown(): void {
+  public function testAoAtualizarLeilaoStatusDeveSerAlterado()
+  {
+    $leilao = new Leilao('Brasilia Amarela');
+    $leilaoDao = new LeilaoDao(self::$pdo);
+    $leilao = $leilaoDao->salva($leilao);
+    $leilao->finaliza();
+
+    $leilaoDao->atualiza($leilao);
+
+    $leiloes = $leilaoDao->recuperarFinalizados();
+    self::assertCount(1, $leiloes);
+    self::assertSame('Brasilia Amarela', $leiloes[0]->recuperarDescricao());
+  }
+
+  public function tearDown(): void
+  {
     // Cancela a transacao
     self::$pdo->rollBack();
     // self::$pdo->exec('DELETE FROM leiloes;');
   }
 
-  public static function leiloes() {
+  public static function leiloes()
+  {
     $naoFinalizado = new Leilao('Variant 0Km');
     $finalizado = new Leilao('Fiat 147 0Km');
     $finalizado->finaliza();
