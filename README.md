@@ -1,4 +1,4 @@
-# php_28_mocks
+# php_29_testes_de_integracao
 
 Projeto do curso "Testes de integração com PHP testando o acesso à API e ao banco de dados" da Alura
 
