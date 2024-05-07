@@ -71,30 +71,30 @@ class Encerradortest extends TestCase
   }
 }
 
-class LeilaoDaoMock extends LeilaoDao
-{
-  private $leiloes = [];
+// class LeilaoDaoMock extends LeilaoDao
+// {
+//   private $leiloes = [];
 
-  public function salva(Leilao $leilao): void
-  {
-    $this->leiloes[] = $leilao;
-  }
+//   public function salva(Leilao $leilao): void
+//   {
+//     $this->leiloes[] = $leilao;
+//   }
 
-  public function recuperarNaoFinalizados(): array
-  {
-    return array_filter($this->leiloes, function (Leilao $leilao) {
-      return !$leilao->estaFinalizado();
-    });
-  }
+//   public function recuperarNaoFinalizados(): array
+//   {
+//     return array_filter($this->leiloes, function (Leilao $leilao) {
+//       return !$leilao->estaFinalizado();
+//     });
+//   }
 
-  public function recuperarFinalizados(): array
-  {
-    return array_filter($this->leiloes, function (Leilao $leilao) {
-      return $leilao->estaFinalizado();
-    });
-  }
+//   public function recuperarFinalizados(): array
+//   {
+//     return array_filter($this->leiloes, function (Leilao $leilao) {
+//       return $leilao->estaFinalizado();
+//     });
+//   }
 
-  public function atualiza(Leilao $leilao)
-  {
-  }
-}
+//   public function atualiza(Leilao $leilao)
+//   {
+//   }
+// }

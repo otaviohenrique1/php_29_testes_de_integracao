@@ -2,7 +2,7 @@
 
 namespace Alura\Leilao\Dao;
 
-use Alura\Leilao\Infra\ConnectionCreator;
+// use Alura\Leilao\Infra\ConnectionCreator;
 use Alura\Leilao\Model\Leilao as ModelLeilao;
 use PDO;
 

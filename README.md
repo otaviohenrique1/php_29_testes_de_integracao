@@ -17,6 +17,8 @@ Projeto do curso "Testes de integração com PHP testando o acesso à API e ao b
 - php vendor/bin/phpunit tests
 - php vendor/bin/phpunit --colors tests
 - php vendor/bin/phpunit
+- php vendor/bin/phpunit --testsuit=unit
+- php vendor/bin/phpunit --testsuit=integration
 
 ## Pacotes
 
